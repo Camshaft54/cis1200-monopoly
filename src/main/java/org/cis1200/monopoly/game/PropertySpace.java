@@ -1,4 +1,7 @@
-package org.cis1200.monopoly;
+package org.cis1200.monopoly.game;
+
+import org.cis1200.monopoly.PropertyResponse;
+import org.cis1200.monopoly.SpacePrompt;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -30,7 +33,7 @@ public class PropertySpace implements Space {
         }
 
         owner = p;
-        owner.properties.add(this);
+        owner.getProperties().add(this);
         p.changeMoney(-purchasePrice);
         return PropertyResponse.OK;
     }

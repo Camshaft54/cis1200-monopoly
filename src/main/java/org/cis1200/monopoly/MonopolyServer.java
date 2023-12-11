@@ -1,7 +1,11 @@
 package org.cis1200.monopoly;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.cis1200.monopoly.game.Board;
+import org.cis1200.monopoly.game.Space;
 import org.cis1200.monopoly.state.MonopolyState;
+import org.cis1200.monopoly.game.Player;
+import org.cis1200.monopoly.game.PropertySpace;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,45 +60,45 @@ public class MonopolyServer implements Runnable, WebSocket.Listener {
     public String handleRequest(String requestStr) throws IOException {
         if (requestStr == null) {
             int newClientId = (player1 == null) ? 1 : 2;
-            return objectMapper.writeValueAsString(new ServerResponse("OK", newClientId, getState()));
+            return objectMapper.writeValueAsString(new ServerMessage("OK", newClientId, getState()));
         }
-        ClientResponse request = objectMapper.readValue(requestStr, ClientResponse.class);
-        ServerResponse response;
+        ClientMessage request = objectMapper.readValue(requestStr, ClientMessage.class);
+        ServerMessage response;
         if (request.type.equals("NAME")) {
             if (player1 != null && player2 != null) {
-                response = new ServerResponse("INVALID", request.player, getState());
+                response = new ServerMessage("INVALID", request.player, getState());
             } else if (request.player == 1) {
                 player1 = new Player(request.subject, 1, 1500);
                 currentPlayer = player1;
-                response = new ServerResponse("OK", request.player, getState());
+                response = new ServerMessage("OK", request.player, getState());
             } else if (request.player == 2) {
                 player2 = new Player(request.subject, 2, 1500);
-                response = new ServerResponse("OK", request.player, getState());
+                response = new ServerMessage("OK", request.player, getState());
             } else {
-                response = new ServerResponse("INVALID", request.player, getState());
+                response = new ServerMessage("INVALID", request.player, getState());
             }
         } else if (request.player != currentPlayer.getId()) {
-            response = new ServerResponse("NOT_TURN", request.player, getState());
+            response = new ServerMessage("NOT_TURN", request.player, getState());
         } else {
             switch (request.type) {
-                case "ROLL_DICE" -> response = new ServerResponse(board.movePlayer(currentPlayer).toString(), request.player, getState());
+                case "ROLL_DICE" -> response = new ServerMessage(board.movePlayer(currentPlayer).toString(), request.player, getState());
                 case "BUY_PROPERTY" -> {
                     Space space = board.getPlayerSpace(currentPlayer);
                     if (space instanceof PropertySpace) {
-                        response = new ServerResponse(((PropertySpace) space).buyProperty(currentPlayer).toString(), request.player, getState());
+                        response = new ServerMessage(((PropertySpace) space).buyProperty(currentPlayer).toString(), request.player, getState());
                     } else {
-                        response = new ServerResponse("NOT_PROPERTY", request.player, getState());
+                        response = new ServerMessage("NOT_PROPERTY", request.player, getState());
                     }
                 }
-                case "BUY_HOUSE" -> response = new ServerResponse(board.getProperty(request.subject).buyHouse(currentPlayer).toString(), request.player, getState());
-                case "SELL_HOUSE" -> response = new ServerResponse(board.getProperty(request.subject).sellHouse(currentPlayer).toString(), request.player, getState());
-                case "MORTGAGE" -> response = new ServerResponse(board.getProperty(request.subject).mortgageProperty(currentPlayer).toString(), request.player, getState());
-                case "UNMORTGAGE" -> response = new ServerResponse(board.getProperty(request.subject).unmortgageProperty(currentPlayer).toString(), request.player, getState());
+                case "BUY_HOUSE" -> response = new ServerMessage(board.getProperty(request.subject).buyHouse(currentPlayer).toString(), request.player, getState());
+                case "SELL_HOUSE" -> response = new ServerMessage(board.getProperty(request.subject).sellHouse(currentPlayer).toString(), request.player, getState());
+                case "MORTGAGE" -> response = new ServerMessage(board.getProperty(request.subject).mortgageProperty(currentPlayer).toString(), request.player, getState());
+                case "UNMORTGAGE" -> response = new ServerMessage(board.getProperty(request.subject).unmortgageProperty(currentPlayer).toString(), request.player, getState());
                 case "END_TURN" -> {
                     currentPlayer = (currentPlayer.getId() == 1) ? player2 : player1;
-                    response = new ServerResponse("OK", request.player, getState());
+                    response = new ServerMessage("OK", request.player, getState());
                 }
-                default -> response = new ServerResponse("INVALID", request.player, getState());
+                default -> response = new ServerMessage("INVALID", request.player, getState());
             }
         }
         return objectMapper.writeValueAsString(response);

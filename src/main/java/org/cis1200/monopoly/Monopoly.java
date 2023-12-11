@@ -1,5 +1,7 @@
 package org.cis1200.monopoly;
 
+import org.cis1200.monopoly.game.Board;
+
 import java.io.IOException;
 
 public class Monopoly implements Runnable {

@@ -1,5 +1,11 @@
 package org.cis1200.monopoly;
 
+import org.cis1200.monopoly.game.BlankSpace;
+import org.cis1200.monopoly.game.Board;
+import org.cis1200.monopoly.game.Space;
+import org.cis1200.monopoly.game.Player;
+import org.cis1200.monopoly.game.PropertyGroup;
+import org.cis1200.monopoly.game.PropertySpace;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

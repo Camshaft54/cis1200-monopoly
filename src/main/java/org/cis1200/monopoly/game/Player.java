@@ -1,4 +1,4 @@
-package org.cis1200.monopoly;
+package org.cis1200.monopoly.game;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -7,7 +7,7 @@ public class Player {
     private final String name;
     private final int id;
     private int money;
-    ArrayList<PropertySpace> properties = new ArrayList<>(30);
+    private final ArrayList<PropertySpace> properties = new ArrayList<>(30);
 
     public Player(String name, int id, int money) {
         this.name = name;
@@ -30,6 +30,10 @@ public class Player {
     public int changeMoney(int amount) {
         money += amount;
         return money;
+    }
+
+    public ArrayList<PropertySpace> getProperties() {
+        return properties;
     }
 
     @Override

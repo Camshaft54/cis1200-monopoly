@@ -1,7 +1,8 @@
-package org.cis1200.monopoly;
+package org.cis1200.monopoly.game;
+
+import org.cis1200.monopoly.SpacePrompt;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Board {
     private static final int COLLECT_GO_AMOUNT = 200;

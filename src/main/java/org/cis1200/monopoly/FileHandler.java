@@ -2,9 +2,8 @@ package org.cis1200.monopoly;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.cis1200.monopoly.state.MonopolyState;
-import org.cis1200.monopoly.state.PlayerState;
-import org.cis1200.monopoly.state.PropertyState;
+import org.cis1200.monopoly.game.*;
+import org.cis1200.monopoly.state.*;
 
 import java.awt.*;
 import java.io.*;
@@ -13,18 +12,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FileHandler {
-    public static MonopolyState toState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
+    public static MonopolyState toState(Player currentPlayer, Board b, Player p1, Player p2) {
         PlayerState ps1 = null;
         PlayerState ps2 = null;
         if (p1 != null) {
             ps1 = new PlayerState(p1.getName(),
-                    p1.properties.stream().map(PropertySpace::getName).toList(),
+                    p1.getProperties().stream().map(PropertySpace::getName).toList(),
                     p1.getMoney(),
                     b.getPlayerLocation(p1));
         }
         if (p2 != null) {
             ps2 = new PlayerState(p2.getName(),
-                    p2.properties.stream().map(PropertySpace::getName).toList(),
+                    p2.getProperties().stream().map(PropertySpace::getName).toList(),
                     p2.getMoney(),
                     b.getPlayerLocation(p2));
         }
