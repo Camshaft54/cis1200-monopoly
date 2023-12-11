@@ -1,19 +1,26 @@
 package org.cis1200.monopoly;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.cis1200.monopoly.state.MonopolyState;
 
 public class ServerResponse {
     // types: OK, NOT_TURN, INVALID, or a misc. property response, or a misc. space prompt
     @JsonProperty
-    String type;
+    public String type;
     @JsonProperty
-    int clientId;
-
+    public int clientId;
     @JsonProperty
-    MonopolyState monopolyState;
+    public MonopolyState monopolyState;
 
-    public ServerResponse(String type, int clientId, MonopolyState monopolyState) {
+    @JsonCreator
+    public ServerResponse() {
+        type = null;
+        clientId = -1;
+        monopolyState = null;
+    }
+
+    public ServerResponse(@JsonProperty("type") String type, @JsonProperty("clientId") int clientId, @JsonProperty("monopolyState") MonopolyState monopolyState) {
         this.type = type;
         this.clientId = clientId;
         this.monopolyState = monopolyState;

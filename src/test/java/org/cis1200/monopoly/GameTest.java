@@ -8,16 +8,15 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class GameTest {
     @Test
     public void testPropertyAndGroupBasic() {
-        PropertyGroup purple = new PropertyGroup(new Color(128, 0, 128), 50, 100);
+        PropertyGroup purple = new PropertyGroup(new Color(115, 60, 160), 50, 100);
         PropertySpace property1 = new PropertySpace("Mediterranean Avenue", purple, 60, 30, new int[]{2, 10, 30, 90, 160, 250});
         PropertySpace property2 = new PropertySpace("Baltic Avenue", purple, 120, 60, new int[]{4, 20, 60, 180, 350, 450});
-        purple.registerProperty(property1);
-        purple.registerProperty(property2);
-        assertEquals(new Color(128, 0, 128), purple.getColor());
+        assertEquals(new Color(115, 60, 160), purple.getColor());
         assertEquals(50, purple.getHousePrice());
         assertEquals(100, purple.getHotelPrice());
         assertEquals(2, purple.getPropertySpaces().size());
@@ -250,7 +249,7 @@ public class GameTest {
                 new BlankSpace("1"),
                 new BlankSpace("1"),
                 new BlankSpace("1"),
-                new BlankSpace("1")));
+                new BlankSpace("1")), Map.of());
         Player player1 = new Player("Player 1", 1, 1500);
         assertEquals(0, b.getPlayerLocation(player1));
         assertEquals(SpacePrompt.NONE, b.movePlayer(player1));
@@ -261,7 +260,7 @@ public class GameTest {
     public void testMovePlayerBad() {
         Board b = new Board(List.of(
                 new BlankSpace("1"),
-                new BlankSpace("1")));
+                new BlankSpace("1")), Map.of());
         Player player1 = new Player("Player 3", 0, 1500);
         assertThrows(IllegalArgumentException.class, () -> b.movePlayer(player1));
     }
@@ -275,14 +274,14 @@ public class GameTest {
         spaces.add(property1);
         spaces.add(property2);
         spaces.add(new BlankSpace("Test"));
-        return new Board(spaces);
+        return new Board(spaces, Map.of("Mediterranean Avenue", property1, "Baltic Avenue", property2));
     }
 
     @Test
     public void testLoadConfig() throws IOException {
         List<Space> b = FileHandler.loadBoard("files/testBoard.json").getSpaces();
-        PropertyGroup purple = new PropertyGroup(new Color(128, 0, 128), 50, 100);
-        PropertyGroup lightBlue = new PropertyGroup(new Color(50, 50, 250), 100, 200);
+        PropertyGroup purple = new PropertyGroup(new Color(115, 60, 160), 50, 100);
+        PropertyGroup lightBlue = new PropertyGroup(new Color(205, 230, 250), 100, 200);
         PropertySpace mediterranean = new PropertySpace("Mediterranean Avenue", purple, 60, 30, new int[]{2, 10, 30, 90, 160, 250});
         PropertySpace baltic = new PropertySpace("Baltic Avenue", purple, 70, 35, new int[]{4, 20, 60, 180, 320, 450});
         PropertySpace oriental = new PropertySpace("Oriental Avenue", lightBlue, 100, 50, new int[]{6, 30, 90, 270, 400, 550});

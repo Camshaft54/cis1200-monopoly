@@ -5,14 +5,11 @@ import java.io.IOException;
 public class Monopoly implements Runnable {
     public void run() {
         // Prompt user to choose between server or client
-        boolean clientMode = true;
+        boolean clientMode = false;
         // Run client or server
         // noinspection ConstantValue
-        if (clientMode) {
-            runClient();
-        } else {
-            runServer();
-        }
+        new Thread(this::runServer).start();
+        runClient();
     }
 
     public void runClient() {
@@ -23,7 +20,6 @@ public class Monopoly implements Runnable {
             // Start websocket
             MonopolyClient monopolyClient = new MonopolyClient();
             monopolyClient.run();
-            Player currentPlayer = null;
             // Open window to represent server status (clients connected, etc.)
         } catch (IOException io) {
             System.out.println("Could not load board from file!");

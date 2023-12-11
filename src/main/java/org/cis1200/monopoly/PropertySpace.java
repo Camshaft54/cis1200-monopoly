@@ -189,15 +189,15 @@ public class PropertySpace implements Space {
                 isMortgaged == that.isMortgaged &&
                 numHouses == that.numHouses &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(group, that.group) &&
+                Objects.equals(group.getColor(), that.group.getColor()) &&
                 Arrays.equals(rentCosts, that.rentCosts) &&
                 Objects.equals(owner, that.owner);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, group, purchasePrice, mortgageValue, owner, isMortgaged, numHouses);
-        result = 31 * result + Arrays.hashCode(rentCosts);
+        int result = Objects.hash(name); // TODO why does this not work when the other fields are hashed?
+        result = 31 * result;
         return result;
     }
 

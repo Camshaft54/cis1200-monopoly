@@ -14,24 +14,29 @@ import java.util.stream.Collectors;
 
 public class FileHandler {
     public static MonopolyState toState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
-        PlayerState ps1 = new PlayerState(p1.getName(),
-                p1.properties.stream().map(PropertySpace::getName).toList(),
-                p1.getMoney(),
-                b.getPlayerLocation(p1));
-        PlayerState ps2 = new PlayerState(p2.getName(),
-                p2.properties.stream().map(PropertySpace::getName).toList(),
-                p2.getMoney(),
-                b.getPlayerLocation(p2));
-        MonopolyState state = new MonopolyState(b.getFilePath(),
+        PlayerState ps1 = null;
+        PlayerState ps2 = null;
+        if (p1 != null) {
+            ps1 = new PlayerState(p1.getName(),
+                    p1.properties.stream().map(PropertySpace::getName).toList(),
+                    p1.getMoney(),
+                    b.getPlayerLocation(p1));
+        }
+        if (p2 != null) {
+            ps2 = new PlayerState(p2.getName(),
+                    p2.properties.stream().map(PropertySpace::getName).toList(),
+                    p2.getMoney(),
+                    b.getPlayerLocation(p2));
+        }
+        return new MonopolyState(
                 ps1,
                 ps2,
                 b.getSpaces().stream().filter(s -> s instanceof PropertySpace).map(s -> {
                     PropertySpace p = (PropertySpace) s;
-                    return new PropertyState(p.getName(), p.getOwner().getId(), p.isMortgaged(), p.getNumHouses());
+                    return new PropertyState(p.getName(), (p.getOwner() == null) ? -1 : p.getOwner().getId(), p.isMortgaged(), p.getNumHouses());
                 }).toList(),
-                currentPlayer.getId()
+                (currentPlayer == null) ? -1 : currentPlayer.getId()
         );
-        return state;
     }
 
     public static void saveState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
@@ -60,7 +65,7 @@ public class FileHandler {
             case "property" -> propertySpaces.get(s.name);
             default -> throw new IllegalStateException("Unexpected value: " + s.type);
         }).toList();
-        return new Board(filepath, boardSpaces);
+        return new Board(boardSpaces, propertySpaces);
     }
 
     private static class MonopolyConfig {

@@ -2,11 +2,13 @@
   "propertyGroups": [
     {
       "name": "purple",
+      "color": [115, 60, 160],
       "houseCost": 50,
       "hotelCost": 100
     },
     {
       "name": "light blue",
+      "color": [205, 230, 250],
       "houseCost": 100,
       "hotelCost": 200
     }

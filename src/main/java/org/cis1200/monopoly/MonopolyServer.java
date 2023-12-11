@@ -34,8 +34,10 @@ public class MonopolyServer implements Runnable, WebSocket.Listener {
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
         ) {
+            System.out.println("Client connected. Passing state to new client...");
             String initialResponse = handleRequest(null);
             out.println(initialResponse);
+            System.out.println("Sent state to client. Awaiting name...");
 
             String inputLine = in.readLine();
             String outputLine;
@@ -52,60 +54,53 @@ public class MonopolyServer implements Runnable, WebSocket.Listener {
     }
 
     public String handleRequest(String requestStr) throws IOException {
-        MonopolyState state = FileHandler.toState(currentPlayer, board, player1, player2);
         if (requestStr == null) {
             int newClientId = (player1 == null) ? 1 : 2;
-            return objectMapper.writeValueAsString(new ServerResponse("OK", newClientId, state));
+            return objectMapper.writeValueAsString(new ServerResponse("OK", newClientId, getState()));
         }
         ClientResponse request = objectMapper.readValue(requestStr, ClientResponse.class);
         ServerResponse response;
         if (request.type.equals("NAME")) {
             if (player1 != null && player2 != null) {
-                response = new ServerResponse("INVALID", request.player, state);
+                response = new ServerResponse("INVALID", request.player, getState());
             } else if (request.player == 1) {
                 player1 = new Player(request.subject, 1, 1500);
                 currentPlayer = player1;
-                response = new ServerResponse("OK", request.player, state);
+                response = new ServerResponse("OK", request.player, getState());
             } else if (request.player == 2) {
                 player2 = new Player(request.subject, 2, 1500);
-                response = new ServerResponse("OK", request.player, state);
+                response = new ServerResponse("OK", request.player, getState());
             } else {
-                response = new ServerResponse("INVALID", request.player, state);
+                response = new ServerResponse("INVALID", request.player, getState());
             }
         } else if (request.player != currentPlayer.getId()) {
-            response = new ServerResponse("NOT_TURN", request.player, state);
+            response = new ServerResponse("NOT_TURN", request.player, getState());
         } else {
             switch (request.type) {
-                case "ROLL_DICE" -> response = new ServerResponse(board.movePlayer(currentPlayer).toString(), request.player, state);
+                case "ROLL_DICE" -> response = new ServerResponse(board.movePlayer(currentPlayer).toString(), request.player, getState());
                 case "BUY_PROPERTY" -> {
                     Space space = board.getPlayerSpace(currentPlayer);
                     if (space instanceof PropertySpace) {
-                        response = new ServerResponse(((PropertySpace) space).buyProperty(currentPlayer).toString(), request.player, state);
+                        response = new ServerResponse(((PropertySpace) space).buyProperty(currentPlayer).toString(), request.player, getState());
                     } else {
-                        response = new ServerResponse("NOT_PROPERTY", request.player, state);
+                        response = new ServerResponse("NOT_PROPERTY", request.player, getState());
                     }
                 }
-                case "BUY_HOUSE" -> {
-                    response = new ServerResponse(board.getProperty(request.subject).buyHouse(currentPlayer).toString(), request.player, state);
-                }
-                case "SELL_HOUSE" -> {
-                    response = new ServerResponse(board.getProperty(request.subject).sellHouse(currentPlayer).toString(), request.player, state);
-                }
-                case "MORTGAGE" -> {
-                    response = new ServerResponse(board.getProperty(request.subject).mortgageProperty(currentPlayer).toString(), request.player, state);
-                }
-                case "UNMORTGAGE" -> {
-                    response = new ServerResponse(board.getProperty(request.subject).unmortgageProperty(currentPlayer).toString(), request.player, state);
-                }
+                case "BUY_HOUSE" -> response = new ServerResponse(board.getProperty(request.subject).buyHouse(currentPlayer).toString(), request.player, getState());
+                case "SELL_HOUSE" -> response = new ServerResponse(board.getProperty(request.subject).sellHouse(currentPlayer).toString(), request.player, getState());
+                case "MORTGAGE" -> response = new ServerResponse(board.getProperty(request.subject).mortgageProperty(currentPlayer).toString(), request.player, getState());
+                case "UNMORTGAGE" -> response = new ServerResponse(board.getProperty(request.subject).unmortgageProperty(currentPlayer).toString(), request.player, getState());
                 case "END_TURN" -> {
                     currentPlayer = (currentPlayer.getId() == 1) ? player2 : player1;
-                    response = new ServerResponse("OK", request.player, state);
+                    response = new ServerResponse("OK", request.player, getState());
                 }
-                default -> {
-                    response = new ServerResponse("INVALID", request.player, state);
-                }
+                default -> response = new ServerResponse("INVALID", request.player, getState());
             }
         }
         return objectMapper.writeValueAsString(response);
+    }
+
+    private MonopolyState getState() throws IOException {
+        return FileHandler.toState(currentPlayer, board, player1, player2);
     }
 }

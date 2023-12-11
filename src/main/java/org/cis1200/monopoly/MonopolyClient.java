@@ -19,7 +19,6 @@ public class MonopolyClient implements Runnable {
     private PlayerState me;
     private PlayerState opponent;
     private int myPlayerId;
-    private int currentPlayerId;
     private boolean isMyTurn;
 
     @Override
@@ -36,7 +35,10 @@ public class MonopolyClient implements Runnable {
             while ((fromServer != null)) {
                 toServer = handleResponse(fromServer);
                 out.println(toServer);
+                System.out.println(toServer);
                 fromServer = in.readLine();
+                System.out.println(fromServer);
+                return;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -44,6 +46,7 @@ public class MonopolyClient implements Runnable {
     }
 
     private String handleResponse(String responseStr) throws JsonProcessingException {
+        System.out.println(responseStr);
         ServerResponse response = objectMapper.readValue(responseStr, ServerResponse.class);
         MonopolyState state = response.monopolyState;
         propertyStates = state.getPropertyStates();
@@ -55,12 +58,13 @@ public class MonopolyClient implements Runnable {
             me = state.getPlayer2();
             opponent = state.getPlayer1();
         }
-        currentPlayerId = state.getCurrentPlayerId();
+        isMyTurn = state.getCurrentPlayerId() == myPlayerId;
         ClientResponse request;
         switch (response.type) {
             // TODO Do swing stuff depending on server response type
         }
         // TODO make separate method for responding to server
-        return null;
+        ClientResponse clientResponse = new ClientResponse("NAME", "Cameron", myPlayerId);
+        return objectMapper.writeValueAsString(clientResponse);
     }
 }
