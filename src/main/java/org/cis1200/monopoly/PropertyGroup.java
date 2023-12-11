@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PropertyGroup {
     private final Color color;
@@ -72,19 +73,6 @@ public class PropertyGroup {
         return true;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PropertyGroup that = (PropertyGroup) o;
-        return Objects.equals(color, that.color);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color);
-    }
-
     public Color getColor() {
         return color;
     }
@@ -99,5 +87,30 @@ public class PropertyGroup {
 
     public Set<PropertySpace> getPropertySpaces() {
         return propertySpaces;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PropertyGroup that = (PropertyGroup) o;
+        return color.equals(that.color) &&
+                housePrice == that.housePrice &&
+                hotelPrice == that.hotelPrice;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color);
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyGroup{" +
+                "color=" + color +
+                ", housePrice=" + housePrice +
+                ", hotelPrice=" + hotelPrice +
+                ", propertySpaces=" + propertySpaces.stream().map(PropertySpace::getName).collect(Collectors.joining(", ", "[", "]")) +
+                '}';
     }
 }

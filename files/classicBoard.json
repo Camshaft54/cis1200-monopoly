@@ -2,13 +2,51 @@
   "propertyGroups": [
     {
       "name": "purple",
+      "color": [115, 60, 160],
       "houseCost": 50,
       "hotelCost": 50
     },
     {
       "name": "light blue",
+      "color": [205, 230, 250],
       "houseCost": 50,
       "hotelCost": 50
+    },
+    {
+      "name": "pink",
+      "color": [154, 36, 103],
+      "houseCost": 100,
+      "hotelCost": 100
+    },
+    {
+      "name": "orange",
+      "color": [255, 135, 0],
+      "houseCost": 100,
+      "hotelCost": 100
+    },
+    {
+      "name": "red",
+      "color": [219, 47, 47],
+      "houseCost": 150,
+      "hotelCost": 150
+    },
+    {
+      "name": "yellow",
+      "color": [254, 242, 0],
+      "houseCost": 150,
+      "hotelCost": 150
+    },
+    {
+      "name": "green",
+      "color": [96, 183, 88],
+      "houseCost": 200,
+      "hotelCost": 200
+    },
+    {
+      "name": "blue",
+      "color": [41, 120, 189],
+      "houseCost": 200,
+      "hotelCost": 200
     }
   ],
   "properties": [
@@ -81,6 +119,244 @@
       ],
       "price": 120,
       "mortgage": 60
+    },
+    {
+      "name": "St. Charles Place",
+      "group": "pink",
+      "rents": [
+        10,
+        50,
+        150,
+        450,
+        450,
+        625
+      ],
+      "price": 140,
+      "mortgage": 70
+    },
+    {
+      "name": "States Avenue",
+      "group": "pink",
+      "rents": [
+        10,
+        50,
+        150,
+        450,
+        450,
+        625
+      ],
+      "price": 140,
+      "mortgage": 70
+    },
+    {
+      "name": "Virginia Avenue",
+      "group": "pink",
+      "rents": [
+        12,
+        60,
+        180,
+        500,
+        700,
+        900
+      ],
+      "price": 160,
+      "mortgage": 80
+    },
+    {
+      "name": "St. James Place",
+      "group": "orange",
+      "rents": [
+        14,
+        70,
+        200,
+        550,
+        750,
+        950
+      ],
+      "price": 180,
+      "mortgage": 90
+    },
+    {
+      "name": "Tennessee Avenue",
+      "group": "orange",
+      "rents": [
+        14,
+        70,
+        200,
+        550,
+        750,
+        950
+      ],
+      "price": 180,
+      "mortgage": 90
+    },
+    {
+      "name": "New York Avenue",
+      "group": "orange",
+      "rents": [
+        16,
+        80,
+        220,
+        600,
+        800,
+        1000
+      ],
+      "price": 200,
+      "mortgage": 100
+    },
+    {
+      "name": "Kentucky Avenue",
+      "group": "red",
+      "rents": [
+        18,
+        90,
+        250,
+        700,
+        875,
+        1050
+      ],
+      "price": 220,
+      "mortgage": 110
+    },
+    {
+      "name": "Indiana Avenue",
+      "group": "red",
+      "rents": [
+        18,
+        90,
+        250,
+        700,
+        875,
+        1050
+      ],
+      "price": 220,
+      "mortgage": 110
+    },
+    {
+      "name": "Illinois Avenue",
+      "group": "red",
+      "rents": [
+        20,
+        100,
+        300,
+        750,
+        925,
+        1100
+      ],
+      "price": 240,
+      "mortgage": 120
+    },
+    {
+      "name": "Atlantic Avenue",
+      "group": "yellow",
+      "rents": [
+        22,
+        110,
+        330,
+        800,
+        975,
+        1150
+      ],
+      "price": 260,
+      "mortgage": 130
+    },
+    {
+      "name": "Ventnor Avenue",
+      "group": "yellow",
+      "rents": [
+        22,
+        110,
+        330,
+        800,
+        975,
+        1150
+      ],
+      "price": 260,
+      "mortgage": 130
+    },
+    {
+      "name": "Marvin Gardens",
+      "group": "yellow",
+      "rents": [
+        24,
+        120,
+        360,
+        850,
+        1025,
+        1200
+      ],
+      "price": 280,
+      "mortgage": 140
+    },
+    {
+      "name": "Pacific Avenue",
+      "group": "green",
+      "rents": [
+        26,
+        130,
+        390,
+        900,
+        1100,
+        1275
+      ],
+      "price": 300,
+      "mortgage": 150
+    },
+    {
+      "name": "North Carolina Avenue",
+      "group": "green",
+      "rents": [
+        26,
+        130,
+        390,
+        900,
+        1100,
+        1275
+      ],
+      "price": 300,
+      "mortgage": 150
+    },
+    {
+      "name": "Pennsylvania Avenue",
+      "group": "green",
+      "rents": [
+        28,
+        150,
+        450,
+        1000,
+        1200,
+        1400
+      ],
+      "price": 320,
+      "mortgage": 160
+    },
+    {
+      "name": "Park Place",
+      "group": "blue",
+      "rents": [
+        35,
+        175,
+        500,
+        1100,
+        1300,
+        1500
+      ],
+      "price": 350,
+      "mortgage": 175
+    },
+    {
+      "name": "Boardwalk",
+      "group": "blue",
+      "rents": [
+        50,
+        200,
+        600,
+        1400,
+        1700,
+        2000
+      ],
+      "price": 400,
+      "mortgage": 200
     }
   ],
   "spaces": [
@@ -93,16 +369,152 @@
       "name": "Mediterranean Avenue"
     },
     {
+      "type": "blank",
+      "name": "Community Chest"
+    },
+    {
       "type": "property",
       "name": "Baltic Avenue"
+    },
+    {
+      "type": "blank",
+      "name": "Income Tax"
+    },
+    {
+      "type": "blank",
+      "name": "Reading Railroad"
     },
     {
       "type": "property",
       "name": "Oriental Avenue"
     },
     {
+      "type": "blank",
+      "name": "Chance"
+    },
+    {
+      "type": "property",
+      "name": "Vermont Avenue"
+    },
+    {
       "type": "property",
       "name": "Connecticut Avenue"
+    },
+    {
+      "type": "blank",
+      "name": "Just Visiting"
+    },
+    {
+      "type": "property",
+      "name": "St. Charles Place"
+    },
+    {
+      "type": "property",
+      "name": "Electric Company"
+    },
+    {
+      "type": "property",
+      "name": "States Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Virginia Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Pennsylvania Railroad"
+    },
+    {
+      "type": "property",
+      "name": "St. James Place"
+    },
+    {
+      "type": "blank",
+      "name": "Community Chest"
+    },
+    {
+      "type": "property",
+      "name": "Tennessee Avenue"
+    },
+    {
+      "type": "property",
+      "name": "New York Avenue"
+    },
+    {
+      "type": "blank",
+      "name": "Free Parking"
+    },
+    {
+      "type": "property",
+      "name": "Kentucky Avenue"
+    },
+    {
+      "type": "blank",
+      "name": "Chance"
+    },
+    {
+      "type": "property",
+      "name": "Indiana Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Illinois Avenue"
+    },
+    {
+      "type": "property",
+      "name": "B. & O. Railroad"
+    },
+    {
+      "type": "property",
+      "name": "Atlantic Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Ventnor Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Water Works"
+    },
+    {
+      "type": "property",
+      "name": "Marvin Gardens"
+    },
+    {
+      "type": "blank",
+      "name": "Go To Jail"
+    },
+    {
+      "type": "property",
+      "name": "Pacific Avenue"
+    },
+    {
+      "type": "property",
+      "name": "North Carolina Avenue"
+    },
+    {
+      "type": "blank",
+      "name": "Community Chest"
+    },
+    {
+      "type": "property",
+      "name": "Pennsylvania Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Short Line"
+    },
+    {
+      "type": "property",
+      "name": "Park Place"
+    },
+    {
+      "type": "blank",
+      "name": "Luxury Tax"
+    },
+    {
+      "type": "property",
+      "name": "Boardwalk"
     }
   ]
 }

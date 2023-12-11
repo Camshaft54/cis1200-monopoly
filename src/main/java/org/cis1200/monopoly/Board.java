@@ -53,4 +53,8 @@ public class Board {
             throw new IllegalArgumentException("Player is not Player 1 or 2");
         }
     }
+
+    public List<Space> getSpaces() {
+        return board;
+    }
 }

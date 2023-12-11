@@ -280,7 +280,19 @@ public class GameTest {
 
     @Test
     public void testLoadConfig() throws IOException {
-        Board b = SaveMonopoly.loadBoard("files/classicBoard.json");
-
+        List<Space> b = SaveMonopoly.loadBoard("files/testBoard.json").getSpaces();
+        PropertyGroup purple = new PropertyGroup(new Color(128, 0, 128), 50, 100);
+        PropertyGroup lightBlue = new PropertyGroup(new Color(50, 50, 250), 100, 200);
+        PropertySpace mediterranean = new PropertySpace("Mediterranean Avenue", purple, 60, 30, new int[]{2, 10, 30, 90, 160, 250});
+        PropertySpace baltic = new PropertySpace("Baltic Avenue", purple, 70, 35, new int[]{4, 20, 60, 180, 320, 450});
+        PropertySpace oriental = new PropertySpace("Oriental Avenue", lightBlue, 100, 50, new int[]{6, 30, 90, 270, 400, 550});
+        PropertySpace vermont = new PropertySpace("Vermont Avenue", lightBlue, 100, 50, new int[]{6, 30, 90, 270, 400, 550});
+        PropertySpace connecticut = new PropertySpace("Connecticut Avenue", lightBlue, 120, 60, new int[]{8, 40, 100, 300, 450, 600});
+        assertEquals(new BlankSpace("Go"), b.get(0));
+        assertEquals(mediterranean, b.get(1));
+        assertEquals(baltic, b.get(2));
+        assertEquals(oriental, b.get(3));
+        assertEquals(vermont, b.get(4));
+        assertEquals(connecticut, b.get(5));
     }
 }

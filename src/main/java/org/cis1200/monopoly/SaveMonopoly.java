@@ -9,20 +9,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class SaveMonopoly {
-    private static final Map<String, Color> groups = Map.of("purple", new Color(128, 0, 128)
-            "light blue", new Color(50, 50, 250)
-    );
-
     public static Board loadBoard(String filepath) throws IOException {
         String json = new BufferedReader(new FileReader(filepath)).lines().collect(Collectors.joining());
         ObjectMapper mapper = new ObjectMapper();
         MonopolyConfig config = mapper.readValue(json, MonopolyConfig.class);
         Map<String, PropertyGroup> propertyGroups = config.propertyGroups.stream().collect(
-                Collectors.toMap(c -> c.name, c -> new PropertyGroup(groups.get(c.name), c.houseCost, c.hotelCost))
+                Collectors.toMap(c -> c.name, c ->
+                        new PropertyGroup(new Color(c.color[0], c.color[1], c.color[2]), c.houseCost, c.hotelCost)
+                )
         );
         Map<String, PropertySpace> propertySpaces = config.properties.stream().collect(
                 Collectors.toMap(
@@ -50,6 +47,8 @@ public class SaveMonopoly {
     private static class PropertyGroupConfig {
         @JsonProperty
         String name;
+        @JsonProperty
+        int[] color;
         @JsonProperty
         int houseCost;
         @JsonProperty

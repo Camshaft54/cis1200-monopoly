@@ -1,6 +1,7 @@
 package org.cis1200.monopoly;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class PropertySpace implements Space {
     private final String name;
@@ -176,5 +177,41 @@ public class PropertySpace implements Space {
         } else {
             throw new IllegalArgumentException("Given invalid number of houses to set");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PropertySpace that = (PropertySpace) o;
+        return purchasePrice == that.purchasePrice &&
+                mortgageValue == that.mortgageValue &&
+                isMortgaged == that.isMortgaged &&
+                numHouses == that.numHouses &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(group, that.group) &&
+                Arrays.equals(rentCosts, that.rentCosts) &&
+                Objects.equals(owner, that.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, group, purchasePrice, mortgageValue, owner, isMortgaged, numHouses);
+        result = 31 * result + Arrays.hashCode(rentCosts);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PropertySpace{" +
+                "name='" + name + '\'' +
+                ", group=" + group +
+                ", purchasePrice=" + purchasePrice +
+                ", mortgageValue=" + mortgageValue +
+                ", rentCosts=" + Arrays.toString(rentCosts) +
+                ", owner=" + owner +
+                ", isMortgaged=" + isMortgaged +
+                ", numHouses=" + numHouses +
+                '}';
     }
 }

@@ -1,0 +1,112 @@
+{
+  "propertyGroups": [
+    {
+      "name": "purple",
+      "houseCost": 50,
+      "hotelCost": 100
+    },
+    {
+      "name": "light blue",
+      "houseCost": 100,
+      "hotelCost": 200
+    }
+  ],
+  "properties": [
+    {
+      "name": "Mediterranean Avenue",
+      "group": "purple",
+      "rents": [
+        2,
+        10,
+        30,
+        90,
+        160,
+        250
+      ],
+      "price": 60,
+      "mortgage": 30
+    },
+    {
+      "name": "Oriental Avenue",
+      "group": "light blue",
+      "rents": [
+        6,
+        30,
+        90,
+        270,
+        400,
+        550
+      ],
+      "price": 100,
+      "mortgage": 50
+    },
+    {
+      "name": "Vermont Avenue",
+      "group": "light blue",
+      "rents": [
+        6,
+        30,
+        90,
+        270,
+        400,
+        550
+      ],
+      "price": 100,
+      "mortgage": 50
+    },
+    {
+      "name": "Connecticut Avenue",
+      "group": "light blue",
+      "rents": [
+        8,
+        40,
+        100,
+        300,
+        450,
+        600
+      ],
+      "price": 120,
+      "mortgage": 60
+    },
+    {
+      "name": "Baltic Avenue",
+      "group": "purple",
+      "rents": [
+        4,
+        20,
+        60,
+        180,
+        320,
+        450
+      ],
+      "price": 70,
+      "mortgage": 35
+    }
+  ],
+  "spaces": [
+    {
+      "type": "blank",
+      "name": "Go"
+    },
+    {
+      "type": "property",
+      "name": "Mediterranean Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Baltic Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Oriental Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Vermont Avenue"
+    },
+    {
+      "type": "property",
+      "name": "Connecticut Avenue"
+    }
+  ]
+}
