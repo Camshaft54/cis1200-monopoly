@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.cis1200.monopoly.state.MonopolyState;
 
 public class ServerMessage {
-    // types: OK, NOT_TURN, INVALID, or a misc. property response, or a misc. space prompt
+    // types: OK, NOT_TURN, INVALID, TOO_MANY_CLIENTS, or a misc. property response, or a misc. space prompt
     @JsonProperty
     public String type;
     @JsonProperty

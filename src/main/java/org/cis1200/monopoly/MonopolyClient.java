@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.List;
 
 public class MonopolyClient implements Runnable {
+    private final ClientGUI clientGUI = new ClientGUI();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private List<PropertyState> propertyStates;
     private PlayerState me;
@@ -63,8 +64,29 @@ public class MonopolyClient implements Runnable {
         switch (response.type) {
             // TODO Do swing stuff depending on server response type
         }
+        clientGUI.update(this);
         // TODO make separate method for responding to server
         ClientMessage clientMessage = new ClientMessage("NAME", "Cameron", myPlayerId);
         return objectMapper.writeValueAsString(clientMessage);
+    }
+
+    public List<PropertyState> getPropertyStates() {
+        return propertyStates;
+    }
+
+    public PlayerState getMe() {
+        return me;
+    }
+
+    public PlayerState getOpponent() {
+        return opponent;
+    }
+
+    public int getMyPlayerId() {
+        return myPlayerId;
+    }
+
+    public boolean isMyTurn() {
+        return isMyTurn;
     }
 }

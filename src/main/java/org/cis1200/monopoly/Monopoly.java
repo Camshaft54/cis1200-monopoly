@@ -10,8 +10,11 @@ public class Monopoly implements Runnable {
         boolean clientMode = false;
         // Run client or server
         // noinspection ConstantValue
-        new Thread(this::runServer).start();
-        runClient();
+        Thread server = new Thread(this::runServer);
+        server.setDaemon(false);
+        server.start();
+        new Thread(this::runClient).start();
+        new Thread(this::runClient).start();
     }
 
     public void runClient() {
@@ -34,7 +37,7 @@ public class Monopoly implements Runnable {
         try {
             Board b = FileHandler.loadBoard(filepath);
             // Start websocket
-            MonopolyServer monopolyServer = new MonopolyServer(b);
+            MonopolyMultiServer monopolyServer = new MonopolyMultiServer(b);
             monopolyServer.run();
             // Open window to represent server status (clients connected, etc.)
         } catch (IOException io) {
