@@ -2,18 +2,18 @@ package org.cis1200.monopoly;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.cis1200.monopoly.state.MonopolyState;
+import org.cis1200.monopoly.state.PlayerState;
+import org.cis1200.monopoly.state.PropertyState;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FileHandler {
-    public static void saveState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
+    public static MonopolyState toState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
         PlayerState ps1 = new PlayerState(p1.getName(),
                 p1.properties.stream().map(PropertySpace::getName).toList(),
                 p1.getMoney(),
@@ -31,61 +31,13 @@ public class FileHandler {
                 }).toList(),
                 currentPlayer.getId()
         );
+        return state;
+    }
+
+    public static void saveState(Player currentPlayer, Board b, Player p1, Player p2) throws IOException {
+        MonopolyState state = toState(currentPlayer, b, p1, p2);
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File("files/saveFile.json"), state);
-    }
-
-    private static class MonopolyState {
-        @JsonProperty
-        String boardFilePath;
-        @JsonProperty
-        PlayerState player1;
-        @JsonProperty
-        PlayerState player2;
-        @JsonProperty
-        List<PropertyState> propertyStates;
-        @JsonProperty
-        int currentPlayerId;
-
-        public MonopolyState(String boardFilePath,
-                             PlayerState player1,
-                             PlayerState player2,
-                             List<PropertyState> propertyStates,
-                             int currentPlayerId) {
-            this.boardFilePath = boardFilePath;
-            this.player1 = player1;
-            this.player2 = player2;
-            this.propertyStates = propertyStates;
-            this.currentPlayerId = currentPlayerId;
-        }
-    }
-
-    private static class PlayerState {
-        String name;
-        List<String> properties;
-        int money;
-        int location;
-
-        public PlayerState(String name, List<String> properties, int money, int location) {
-            this.name = name;
-            this.properties = properties;
-            this.money = money;
-            this.location = location;
-        }
-    }
-
-    private static class PropertyState {
-        String name;
-        int ownerId;
-        boolean isMortgaged;
-        int numHouses;
-
-        public PropertyState(String name, int ownerId, boolean isMortgaged, int numHouses) {
-            this.name = name;
-            this.ownerId = ownerId;
-            this.isMortgaged = isMortgaged;
-            this.numHouses = numHouses;
-        }
+        objectMapper.writeValue(new File("files/save.json"), state);
     }
 
     public static Board loadBoard(String filepath) throws IOException {

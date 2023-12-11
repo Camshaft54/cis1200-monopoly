@@ -1,8 +1,7 @@
 package org.cis1200.monopoly;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     private static final int COLLECT_GO_AMOUNT = 200;
@@ -10,8 +9,10 @@ public class Board {
     private final List<Space> board = new LinkedList<>();
     private final Random rand;
     private final int[] locations = new int[2];
+    private final Map<String, PropertySpace> properties;
 
-    public Board(String filepath, List<Space> spaces) {
+    public Board(String filepath, List<Space> spaces, PropertySpace[] properties) {
+        this.properties = Arrays.stream(properties).collect(Collectors.toMap(PropertySpace::getName, p -> p));
         this.filePath = filepath;
         board.addAll(spaces);
         rand = new Random();
@@ -54,6 +55,10 @@ public class Board {
         } else {
             throw new IllegalArgumentException("Player is not Player 1 or 2");
         }
+    }
+
+    public PropertySpace getProperty(String name) {
+        return properties.get(name);
     }
 
     public List<Space> getSpaces() {
