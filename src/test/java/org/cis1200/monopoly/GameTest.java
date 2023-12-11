@@ -280,7 +280,7 @@ public class GameTest {
 
     @Test
     public void testLoadConfig() throws IOException {
-        List<Space> b = SaveMonopoly.loadBoard("files/testBoard.json").getSpaces();
+        List<Space> b = FileHandler.loadBoard("files/testBoard.json").getSpaces();
         PropertyGroup purple = new PropertyGroup(new Color(128, 0, 128), 50, 100);
         PropertyGroup lightBlue = new PropertyGroup(new Color(50, 50, 250), 100, 200);
         PropertySpace mediterranean = new PropertySpace("Mediterranean Avenue", purple, 60, 30, new int[]{2, 10, 30, 90, 160, 250});

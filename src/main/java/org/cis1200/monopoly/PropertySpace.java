@@ -8,7 +8,7 @@ public class PropertySpace implements Space {
     private final PropertyGroup group;
     private final int purchasePrice;
     private final int mortgageValue;
-    final int[] rentCosts;
+    private final int[] rentCosts;
     private Player owner = null;
     private boolean isMortgaged = false;
     private int numHouses = 0;

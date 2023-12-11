@@ -6,11 +6,13 @@ import java.util.Random;
 
 public class Board {
     private static final int COLLECT_GO_AMOUNT = 200;
+    private final String filePath;
     private final List<Space> board = new LinkedList<>();
     private final Random rand;
     private final int[] locations = new int[2];
 
-    public Board(List<Space> spaces) {
+    public Board(String filepath, List<Space> spaces) {
+        this.filePath = filepath;
         board.addAll(spaces);
         rand = new Random();
     }
@@ -56,5 +58,9 @@ public class Board {
 
     public List<Space> getSpaces() {
         return board;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }
