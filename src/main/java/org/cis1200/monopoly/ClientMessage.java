@@ -11,7 +11,7 @@ public class ClientMessage {
     @JsonProperty
     int player;
 
-    // types: rollDice, buyProperty, buyHouse, sellHouse, mortgage, unmortgage, END_TURN, NAME
+    // types: rollDice, buyProperty, buyHouse, sellHouse, mortgage, unmortgage, END_TURN, NAME, WAITING
     @JsonCreator
     public ClientMessage() {
         type = null;

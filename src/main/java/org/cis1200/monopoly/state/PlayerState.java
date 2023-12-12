@@ -29,4 +29,20 @@ public class PlayerState {
         this.money = money;
         this.location = location;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getProperties() {
+        return properties;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public int getLocation() {
+        return location;
+    }
 }

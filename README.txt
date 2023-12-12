@@ -50,3 +50,6 @@ PennKey: _______
 
 - Cite any external resources (images, tutorials, etc.) that you may have used 
   while implementing your game.
+
+https://stackoverflow.com/questions/41111870/swing-drawstring-text-bounds-and-line-wrapping
+https://docs.oracle.com/javase/tutorial/

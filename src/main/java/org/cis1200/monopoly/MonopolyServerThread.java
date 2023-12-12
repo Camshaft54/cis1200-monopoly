@@ -66,7 +66,7 @@ public class MonopolyServerThread extends Thread {
             } else {
                 return objectMapper.writeValueAsString(new ServerMessage("TOO_MANY_CLIENTS", -1, state()));
             }
-            return objectMapper.writeValueAsString(new ServerMessage("OK", newClientId, state()));
+            return objectMapper.writeValueAsString(new ServerMessage("PROVIDE_NAME", newClientId, state()));
         }
         ClientMessage request = objectMapper.readValue(requestStr, ClientMessage.class);
         ServerMessage response;
@@ -75,19 +75,29 @@ public class MonopolyServerThread extends Thread {
                 response = new ServerMessage("INVALID", request.player, state());
             } else if (request.player == 1) {
                 server.player1 = new Player(request.subject, 1, 1500);
-                server.currentPlayer = player1;
+                server.currentPlayer = server.player1;
                 response = new ServerMessage("OK", request.player, state());
+                System.out.println(server.currentPlayer);
             } else if (request.player == 2) {
                 server.player2 = new Player(request.subject, 2, 1500);
                 response = new ServerMessage("OK", request.player, state());
             } else {
                 response = new ServerMessage("INVALID", request.player, state());
             }
+        } else if (request.type.equals("WAITING")) {
+            response = new ServerMessage("OK", request.player, state());
         } else if (request.player != currentPlayer.getId()) {
             response = new ServerMessage("NOT_TURN", request.player, state());
         } else {
             switch (request.type) {
-                case "ROLL_DICE" -> response = new ServerMessage(board.movePlayer(currentPlayer).toString(), request.player, state());
+                case "ROLL_DICE" -> {
+                    if (!server.rolledDice) {
+                        response = new ServerMessage(board.movePlayer(currentPlayer).toString(), request.player, state());
+                        server.rolledDice = true;
+                    } else {
+                        response = new ServerMessage("ALREADY_ROLLED", request.player, state());
+                    }
+                }
                 case "BUY_PROPERTY" -> {
                     Space space = board.getPlayerSpace(currentPlayer);
                     if (space instanceof PropertySpace) {
@@ -101,8 +111,13 @@ public class MonopolyServerThread extends Thread {
                 case "MORTGAGE" -> response = new ServerMessage(board.getProperty(request.subject).mortgageProperty(currentPlayer).toString(), request.player, state());
                 case "UNMORTGAGE" -> response = new ServerMessage(board.getProperty(request.subject).unmortgageProperty(currentPlayer).toString(), request.player, state());
                 case "END_TURN" -> {
-                    server.currentPlayer = (currentPlayer.getId() == 1) ? player2 : player1;
-                    response = new ServerMessage("OK", request.player, state());
+                    if (!server.rolledDice) {
+                        response = new ServerMessage("ROLL_FIRST", request.player, state());
+                    } else {
+                        server.rolledDice = false;
+                        server.currentPlayer = (currentPlayer.getId() == 1) ? player2 : player1;
+                        response = new ServerMessage("OK", request.player, state());
+                    }
                 }
                 default -> response = new ServerMessage("INVALID", request.player, state());
             }

@@ -23,7 +23,7 @@ public class Monopoly implements Runnable {
         try {
             Board b = FileHandler.loadBoard(filepath);
             // Start websocket
-            MonopolyClient monopolyClient = new MonopolyClient();
+            MonopolyClient monopolyClient = new MonopolyClient(b);
             monopolyClient.run();
             // Open window to represent server status (clients connected, etc.)
         } catch (IOException io) {

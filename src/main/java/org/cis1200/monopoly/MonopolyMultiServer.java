@@ -11,6 +11,7 @@ public class MonopolyMultiServer implements Runnable {
     public Player player1;
     public Player player2;
     public Player currentPlayer;
+    public boolean rolledDice;
     public int clientsConnected = 0;
     public boolean player1Connected = false;
     public boolean player2Connected = false;
@@ -27,11 +28,9 @@ public class MonopolyMultiServer implements Runnable {
         try (
                 ServerSocket server = new ServerSocket(80)
         ) {
-            while (true) {
-                if (clientsConnected < 3) {
-                    new MonopolyServerThread(server.accept(), this).start();
-                    clientsConnected++;
-                }
+            while (clientsConnected < 3) {
+                new MonopolyServerThread(server.accept(), this).start();
+                clientsConnected++;
             }
         } catch (IOException e) {
             // TODO implement cleanly

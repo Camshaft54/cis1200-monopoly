@@ -47,6 +47,16 @@
       "color": [41, 120, 189],
       "houseCost": 200,
       "hotelCost": 200
+    }, {
+      "name": "utility",
+      "color": [15, 15, 15],
+      "houseCost": 0,
+      "hotelCost": 0
+    }, {
+      "name": "railroad",
+      "color": [10, 10, 10],
+      "houseCost": 0,
+      "hotelCost": 0
     }
   ],
   "properties": [
@@ -357,6 +367,89 @@
       ],
       "price": 400,
       "mortgage": 200
+    },
+    {
+      "name": "Electric Company",
+      "group": "utility",
+      "rents": [
+        30,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "price": 150,
+      "mortgage": 75
+    },
+    {
+      "name": "Water Works",
+      "group": "utility",
+      "rents": [
+        30,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "price": 150,
+      "mortgage": 75
+    }, {
+      "name": "Reading Railroad",
+      "group": "railroad",
+      "rents": [
+        25,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "price": 150,
+      "mortgage": 75
+    },
+    {
+      "name": "Pennsylvania Railroad",
+      "group": "railroad",
+      "rents": [
+        25,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "price": 200,
+      "mortgage": 100
+    },
+    {
+      "name": "B. & O. Railroad",
+      "group": "railroad",
+      "rents": [
+        25,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "price": 200,
+      "mortgage": 100
+    },
+    {
+      "name": "Short Line",
+      "group": "railroad",
+      "rents": [
+        25,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "price": 200,
+      "mortgage": 100
     }
   ],
   "spaces": [
@@ -381,7 +474,7 @@
       "name": "Income Tax"
     },
     {
-      "type": "blank",
+      "type": "property",
       "name": "Reading Railroad"
     },
     {
@@ -503,6 +596,10 @@
     {
       "type": "property",
       "name": "Short Line"
+    },
+    {
+      "type": "blank",
+      "name": "Chance"
     },
     {
       "type": "property",

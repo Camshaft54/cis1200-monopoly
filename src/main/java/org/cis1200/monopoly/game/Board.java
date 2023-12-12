@@ -1,8 +1,11 @@
 package org.cis1200.monopoly.game;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.cis1200.monopoly.SpacePrompt;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Board {
     private static final int COLLECT_GO_AMOUNT = 200;
@@ -37,7 +40,7 @@ public class Board {
             p.changeMoney(COLLECT_GO_AMOUNT);
         }
         locations[p.getId() - 1] = (locations[p.getId() - 1] + spacesToMove) % board.size();
-        return board.get(locations[p.getId() - 1]).landPlayer(p);
+        return board.get(38).landPlayer(p);
     }
 
     public int getPlayerLocation(Player p) {
@@ -62,5 +65,19 @@ public class Board {
 
     public List<Space> getSpaces() {
         return board;
+    }
+
+    public List<String> getSpaceNames() {
+        List<String> names = new LinkedList<>();
+        for (Space space : board) {
+            System.out.println(space.getName());
+            names.add(space.getName());
+        }
+        return names;
+    }
+
+    public List<Color> getSpaceColors() {
+        return board.stream()
+                .map(s -> (s instanceof PropertySpace) ? ((PropertySpace) s).getGroup().getColor() : null).toList();
     }
 }
