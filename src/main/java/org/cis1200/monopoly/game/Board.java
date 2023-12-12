@@ -11,13 +11,18 @@ public class Board {
     private static final int COLLECT_GO_AMOUNT = 200;
     private final List<Space> board = new LinkedList<>();
     private final Random rand;
-    private final int[] locations = new int[2];
+    private int[] locations = new int[2];
     private final Map<String, PropertySpace> properties;
 
     public Board(List<Space> spaces, Map<String, PropertySpace> properties) {
         this.properties = properties;
         board.addAll(spaces);
         rand = new Random();
+    }
+
+    public Board(List<Space> spaces, Map<String, PropertySpace> properties, int[] locations) {
+        this(spaces, properties);
+        this.locations = locations;
     }
 
     /**
@@ -40,7 +45,7 @@ public class Board {
             p.changeMoney(COLLECT_GO_AMOUNT);
         }
         locations[p.getId() - 1] = (locations[p.getId() - 1] + spacesToMove) % board.size();
-        return board.get(38).landPlayer(p);
+        return board.get(locations[p.getId() - 1]).landPlayer(p);
     }
 
     public int getPlayerLocation(Player p) {

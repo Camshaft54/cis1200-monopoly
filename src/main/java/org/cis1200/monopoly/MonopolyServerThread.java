@@ -72,7 +72,7 @@ public class MonopolyServerThread extends Thread {
         ServerMessage response;
         if (request.type.equals("NAME")) {
             if (player1 != null && player2 != null) {
-                response = new ServerMessage("INVALID", request.player, state());
+                response = new ServerMessage("OK", request.player, state());
             } else if (request.player == 1) {
                 server.player1 = new Player(request.subject, 1, 1500);
                 server.currentPlayer = server.player1;

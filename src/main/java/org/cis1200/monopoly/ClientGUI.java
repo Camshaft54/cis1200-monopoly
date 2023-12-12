@@ -149,4 +149,9 @@ public class ClientGUI implements ActionListener {
         }
         messageFuture.complete(message);
     }
+
+    public void close() {
+        frame.setVisible(false);
+        frame.dispose();
+    }
 }

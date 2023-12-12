@@ -1,18 +1,28 @@
 package org.cis1200.monopoly.game;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
     private final String name;
     private final int id;
     private int money;
-    private final ArrayList<PropertySpace> properties = new ArrayList<>(30);
+    private final List<PropertySpace> properties;
 
     public Player(String name, int id, int money) {
         this.name = name;
         this.id = id;
         this.money = money;
+        properties = new LinkedList<>();
+    }
+
+    public Player(String name, int id, int money, List<PropertySpace> properties) {
+        this.name = name;
+        this.id = id;
+        this.money = money;
+        this.properties = properties;
     }
 
     public String getName() {
@@ -32,8 +42,12 @@ public class Player {
         return money;
     }
 
-    public ArrayList<PropertySpace> getProperties() {
+    public List<PropertySpace> getProperties() {
         return properties;
+    }
+
+    public void addAllProperties(List<PropertySpace> properties) {
+        this.properties.addAll(properties);
     }
 
     @Override

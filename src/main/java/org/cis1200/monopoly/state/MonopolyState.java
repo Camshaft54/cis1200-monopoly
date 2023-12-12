@@ -2,8 +2,16 @@ package org.cis1200.monopoly.state;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.cis1200.monopoly.game.Board;
+import org.cis1200.monopoly.game.Player;
+import org.cis1200.monopoly.game.PropertySpace;
+import org.cis1200.monopoly.game.Space;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class MonopolyState {
     @JsonProperty

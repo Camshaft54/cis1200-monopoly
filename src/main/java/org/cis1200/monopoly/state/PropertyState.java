@@ -9,7 +9,7 @@ public class PropertyState {
     @JsonProperty
     int ownerId;
     @JsonProperty
-    boolean isMortgaged;
+    boolean mortgaged;
     @JsonProperty
     int numHouses;
 
@@ -17,14 +17,30 @@ public class PropertyState {
     public PropertyState() {
         name = null;
         ownerId = -1;
-        isMortgaged = false;
+        mortgaged = false;
         numHouses = -1;
     }
 
-    public PropertyState(String name, int ownerId, boolean isMortgaged, int numHouses) {
+    public PropertyState(String name, int ownerId, boolean mortgaged, int numHouses) {
         this.name = name;
         this.ownerId = ownerId;
-        this.isMortgaged = isMortgaged;
+        this.mortgaged = mortgaged;
         this.numHouses = numHouses;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public boolean isMortgaged() {
+        return mortgaged;
+    }
+
+    public int getNumHouses() {
+        return numHouses;
     }
 }

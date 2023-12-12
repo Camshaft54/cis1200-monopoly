@@ -135,7 +135,11 @@ public class PropertySpace implements Space {
             } else {
                 p.changeMoney(-rentCosts[numHouses]);
             }
-            return SpacePrompt.PAID_RENT;
+            if (p.getMoney() < 0) {
+                return SpacePrompt.BANKRUPTCY;
+            } else {
+                return SpacePrompt.PAID_RENT;
+            }
         } else {
             return SpacePrompt.NONE;
         }
@@ -216,5 +220,13 @@ public class PropertySpace implements Space {
                 ", isMortgaged=" + isMortgaged +
                 ", numHouses=" + numHouses +
                 '}';
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public void setMortgaged(boolean mortgaged) {
+        isMortgaged = mortgaged;
     }
 }

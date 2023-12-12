@@ -42,12 +42,12 @@ public class MonopolyClient implements Runnable {
             while ((fromServer != null)) {
                 toServer = handleResponse(fromServer);
                 out.println(toServer);
-                System.out.println(toServer);
                 fromServer = in.readLine();
-                System.out.println(fromServer);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            clientGUI.warnUser("Encountered an error involving Network I/O. Terminating.");
+            clientGUI.close();
+            System.exit(23);
         }
     }
 
@@ -66,6 +66,14 @@ public class MonopolyClient implements Runnable {
         }
         isMyTurn = state.getCurrentPlayerId() == myPlayerId;
         ClientMessage clientMessage;
+        // Check if other player went bankrupt
+        if (opponent.getMoney() < 0) {
+            clientGUI.warnUser("Hey! You won. I guess you're not as bad as I thought you were. " +
+                    "I'm sure you'll lose next time!");
+            clientGUI.close();
+
+            System.exit(0);
+        }
         // React to server message
         switch (response.type) {
             case "PROVIDE_NAME" -> {
@@ -73,53 +81,34 @@ public class MonopolyClient implements Runnable {
                         new ClientMessage("NAME", clientGUI.provideName(), myPlayerId)
                 );
             }
-            case "NOT_TURN" -> {
-                clientGUI.warnUser("It's not your turn!");
-            }
-            case "INVALID" -> {
-                clientGUI.warnUser("Invalid action!");
-            }
-            case "ROLL_FIRST" -> {
-                clientGUI.warnUser("Nice try, but you've got to roll first!");
-            }
-            case "ALREADY_ROLLED" -> {
-                clientGUI.warnUser("I saw you roll already liar");
-            }
-            case "INSUFFICIENT_FUNDS" -> {
-                clientGUI.warnUser("I know you want that, but you're poor :(");
-            }
-            case "NOT_OWNER" -> {
-                clientGUI.warnUser("You think you own this place... well ya don't!");
-            }
-            case "NO_OWNER" -> {
-                clientGUI.warnUser("No one owns this property, especially you!");
-            }
-            case "NO_HOUSES" -> {
-                clientGUI.warnUser("Ok. Ok. Ok. Lemme get this straight. You want NEGATIVE houses on this property?! WHY? Are you trying to lose money?!");
-            }
-            case "MAX_HOUSES" -> {
-                clientGUI.warnUser("Please stop putting more houses on this property. " + opponent.getName() + " hates you enough already.");
-            }
-            case "ALREADY_OWNED" -> {
-                clientGUI.warnUser("Will you stop clicking \'Buy Property\' all the time? You already own this one!");
-            }
-            case "UNBALANCED_GROUP" -> {
-                clientGUI.warnUser("Woah buddy, those other properties in this color group also want some attention.");
-            }
-            case "NOT_GROUP_OWNER" -> {
-                clientGUI.warnUser("You've gotta own the whole group to do this, hotshot");
-            }
-            case "ALREADY_MORTGAGED" -> {
-                clientGUI.warnUser("Quit acting like a private equity firm and stop mortgaging properties multiple times");
-            }
-            case "NOT_MORTGAGED" -> {
-                clientGUI.warnUser("Looks like somebody never learned how to manage money. This property isn't even mortgaged, yet you want to spend money on mortgaging it?");
-            }
-            case "BUY_PROPERTY" -> {
-                clientGUI.warnUser("Wanna buy a property?");
-            }
-            case "PAID_RENT" -> {
-                clientGUI.warnUser("I hope you enjoyed your stay because you just paid rent!");
+            case "NOT_TURN" -> clientGUI.warnUser("It's not your turn!");
+            case "INVALID" -> clientGUI.warnUser("Invalid action!");
+            case "NOT_PROPERTY" -> clientGUI.warnUser("Not everything in this world can be purchased with money.");
+            case "ROLL_FIRST" -> clientGUI.warnUser("Nice try, but you've got to roll first!");
+            case "ALREADY_ROLLED" -> clientGUI.warnUser("I saw you roll already liar");
+            case "INSUFFICIENT_FUNDS" -> clientGUI.warnUser("I know you want that, but you're poor :(");
+            case "NOT_OWNER" -> clientGUI.warnUser("You think you own this place... well ya don't!");
+            case "NO_OWNER" -> clientGUI.warnUser("No one owns this property, especially you!");
+            case "NO_HOUSES" ->
+                    clientGUI.warnUser("Ok. Ok. Ok. Lemme get this straight. You want NEGATIVE houses on this property?! WHY? Are you trying to lose money?!");
+            case "MAX_HOUSES" ->
+                    clientGUI.warnUser("Please stop putting more houses on this property. " + opponent.getName() + " hates you enough already.");
+            case "ALREADY_OWNED" ->
+                    clientGUI.warnUser("Will you stop clicking 'Buy Property' all the time? You already own this one!");
+            case "UNBALANCED_GROUP" ->
+                    clientGUI.warnUser("Woah buddy, those other properties in this color group also want some attention.");
+            case "NOT_GROUP_OWNER" -> clientGUI.warnUser("You've gotta own the whole group to do this, hotshot");
+            case "ALREADY_MORTGAGED" ->
+                    clientGUI.warnUser("Quit acting like a private equity firm and stop mortgaging properties multiple times");
+            case "NOT_MORTGAGED" ->
+                    clientGUI.warnUser("Looks like somebody never learned how to manage money. This property isn't even mortgaged, yet you want to spend money on mortgaging it?");
+            case "BUY_PROPERTY" -> clientGUI.warnUser("Wanna buy a property?");
+            case "PAID_RENT" -> clientGUI.warnUser("I hope you enjoyed your stay because you just paid rent!");
+            case "BANKRUPTCY" -> {
+                clientGUI.warnUser("Ahh finally! You lost.");
+                clientGUI.close();
+
+                System.exit(0);
             }
         }
 

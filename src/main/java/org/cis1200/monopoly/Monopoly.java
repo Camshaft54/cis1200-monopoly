@@ -2,46 +2,36 @@ package org.cis1200.monopoly;
 
 import org.cis1200.monopoly.game.Board;
 
+import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Monopoly implements Runnable {
     public void run() {
-        // Prompt user to choose between server or client
-        boolean clientMode = false;
-        // Run client or server
-        // noinspection ConstantValue
-        Thread server = new Thread(this::runServer);
-        server.setDaemon(false);
-        server.start();
-        new Thread(this::runClient).start();
-        new Thread(this::runClient).start();
-    }
-
-    public void runClient() {
-        // Prompt user to select board file
         String filepath = "files/classicBoard.json";
         try {
             Board b = FileHandler.loadBoard(filepath);
-            // Start websocket
-            MonopolyClient monopolyClient = new MonopolyClient(b);
-            monopolyClient.run();
-            // Open window to represent server status (clients connected, etc.)
+            Thread server = new Thread(() -> runServer(b));
+            server.setDaemon(false);
+            server.start();
+            new Thread(() -> runClient(b)).start();
+            new Thread(() -> runClient(b)).start();
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not load board from file!");
+            JOptionPane.showMessageDialog(new JFrame(), "Could not locate files/classicBoard.json. Client will be terminated.");
         } catch (IOException io) {
             System.out.println("Could not load board from file!");
+            JOptionPane.showMessageDialog(new JFrame(), "Could not parse board file. Client will be terminated.");
         }
     }
 
-    public void runServer() {
-        // Prompt user to select board file
-        String filepath = "files/classicBoard.json";
-        try {
-            Board b = FileHandler.loadBoard(filepath);
-            // Start websocket
-            MonopolyMultiServer monopolyServer = new MonopolyMultiServer(b);
-            monopolyServer.run();
-            // Open window to represent server status (clients connected, etc.)
-        } catch (IOException io) {
-            System.out.println("Could not load board from file!");
-        }
+    public void runClient(Board b) {
+        MonopolyClient monopolyClient = new MonopolyClient(b);
+        monopolyClient.run();
+    }
+
+    public void runServer(Board b) {
+        MonopolyMultiServer monopolyServer = new MonopolyMultiServer(b);
+        monopolyServer.run();
     }
 }
