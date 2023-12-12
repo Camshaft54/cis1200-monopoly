@@ -66,14 +66,6 @@ public class MonopolyClient implements Runnable {
         }
         isMyTurn = state.getCurrentPlayerId() == myPlayerId;
         ClientMessage clientMessage;
-        // Check if other player went bankrupt
-        if (opponent.getMoney() < 0) {
-            clientGUI.warnUser("Hey! You won. I guess you're not as bad as I thought you were. " +
-                    "I'm sure you'll lose next time!");
-            clientGUI.close();
-
-            System.exit(0);
-        }
         // React to server message
         switch (response.type) {
             case "PROVIDE_NAME" -> {
@@ -110,6 +102,14 @@ public class MonopolyClient implements Runnable {
 
                 System.exit(0);
             }
+        }
+        // Check if other player went bankrupt
+        if (opponent != null && opponent.getMoney() < 0) {
+            clientGUI.warnUser("Hey! You won. I guess you're not as bad as I thought you were. " +
+                    "I'm sure you'll lose next time!");
+            clientGUI.close();
+
+            System.exit(0);
         }
 
         // Respond to server

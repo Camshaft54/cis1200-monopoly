@@ -27,7 +27,7 @@ public class MonopolyMultiServer implements Runnable {
             this.player1 = state.player1;
             this.player2 = state.player2;
             this.currentPlayer = state.currentPlayer;
-        } catch (IOException io) {
+        } catch (Exception e) {
             System.out.println("Could not locate a saved game. Creating new one.");
             this.board = board;
             this.player1 = null;
