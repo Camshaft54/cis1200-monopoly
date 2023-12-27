@@ -71,8 +71,8 @@ public class FileHandler {
                 return space;
             }
         }).toList();
-        p1.addAllProperties(properties.values().stream().filter(p -> p.getOwner().equals(p1)).toList());
-        p2.addAllProperties(properties.values().stream().filter(p -> p.getOwner().equals(p2)).toList());
+        p1.addAllProperties(properties.values().stream().filter(p -> p.getOwner() != null && p.getOwner().equals(p1)).toList());
+        p2.addAllProperties(properties.values().stream().filter(p -> p.getOwner() != null && p.getOwner().equals(p2)).toList());
         Board newBoard = new Board(spaces, properties, new int[]{state.getPlayer1().getLocation(), state.getPlayer1().getLocation()});
         Player currentPlayer = (state.getCurrentPlayerId() == 1) ? p1 : p2;
         return new RecoveredState(newBoard, p1, p2, currentPlayer);
